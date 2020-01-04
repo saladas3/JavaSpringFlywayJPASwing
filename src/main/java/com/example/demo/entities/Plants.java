@@ -7,21 +7,18 @@ import javax.persistence.Id;
 
 @Entity
 public class Plants {
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer plant_id;
+    @Id @GeneratedValue(strategy= GenerationType.AUTO) private Long plant_id;
     private String plant_name;
     private String scientific_name;
 
     public Plants() {};
 
-    public Plants(Integer plant_id, String plant_name, String scientific_name) {
-        this.plant_id = plant_id;
+    public Plants(String plant_name, String scientific_name) {
         this.plant_name = plant_name;
         this.scientific_name = scientific_name;
     }
 
-    public Integer getPlant_id() {
+    public Long getPlant_id() {
         return plant_id;
     }
 
@@ -33,7 +30,7 @@ public class Plants {
         return scientific_name;
     }
 
-    public void setPlant_id(Integer plant_id) {
+    public void setPlant_id(Long plant_id) {
         this.plant_id = plant_id;
     }
 
@@ -45,12 +42,12 @@ public class Plants {
         this.scientific_name = scientific_name;
     }
 
-    @Override
-    public String toString() {
-        return "Plants{" +
-                "plant_id=" + plant_id +
-                ", plant_name='" + plant_name + '\'' +
-                ", scientific_name='" + scientific_name + '\'' +
-                '}';
+    public boolean plantIsEmpty() {
+        return this.plant_name.isEmpty();
     }
+
+    public boolean plantsAreEqual(Plants plant) {
+        return this.plant_name.equals(plant.getPlant_name());
+    }
+
 }

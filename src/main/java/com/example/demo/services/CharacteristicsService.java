@@ -5,8 +5,6 @@ import com.example.demo.repository.CharacteristicsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-
 @Service
 public class CharacteristicsService {
     private CharacteristicsRepository characteristicsRepository;
@@ -16,24 +14,28 @@ public class CharacteristicsService {
         this.characteristicsRepository = characteristicsRepository;
     }
 
-    public ArrayList<Characteristics> findAllCharacteristics() {
-        Iterable<Characteristics> it = characteristicsRepository.findAll();
-
-        ArrayList<Characteristics> characteristic = new ArrayList<>();
-
-        it.forEach(characteristic::add);
-
-        return characteristic;
+    public void insertCharacteristic(Characteristics characteristic) {
+        characteristicsRepository.save(characteristic);
     }
 
-    public String characteristicsToString() {
-        StringBuilder to_return = new StringBuilder();
-        ArrayList<Characteristics> characteristic = new ArrayList<>(findAllCharacteristics());
+    public Long getCharacteristicId(String special_characteristic) {
+        return characteristicsRepository.fetchCharacteristicId(special_characteristic);
+    }
 
-        for (Characteristics c: characteristic) {
-            to_return.append(c.toString());
-        }
+    public Iterable<Characteristics> selectAllCharacteristics() {
+        return characteristicsRepository.findAll();
+    }
 
-        return to_return.toString();
+    public Characteristics getCharacteristicByName(String characteristicName) {
+        return characteristicsRepository.fetchCharacteristicByName(characteristicName);
+    }
+
+    public void removeCharacteristicFromTable(String characteristicName) {
+        Characteristics c = characteristicsRepository.fetchCharacteristicByName(characteristicName);
+        characteristicsRepository.deleteById(c.getCharacteristic_id());
+    }
+
+    public void modifyCharacteristicByName(String searchedCharacteristic, String newColor, Float newHeight, String newSeason) {
+        characteristicsRepository.modifyCharacteristicByName(searchedCharacteristic, newColor, newHeight, newSeason);
     }
 }

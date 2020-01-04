@@ -6,24 +6,22 @@ import javax.persistence.*;
 public class Characteristics {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer characteristic_id;
+    private Long characteristic_id;
     private String special_characteristics;
     private String color;
-    private Integer height;
+    private Float height;
     private String season;
 
     public Characteristics() {};
 
-    public Characteristics(Integer characteristic_id, String special_characteristic, String season,
-                           String color, Integer height) {
-        this.characteristic_id = characteristic_id;
+    public Characteristics(String special_characteristic, String color, Float height, String season) {
         this.special_characteristics = special_characteristic;
         this.season = season;
         this.height = height;
         this.color = color;
     }
 
-    public Integer getCharacteristic_id() {
+    public Long getCharacteristic_id() {
         return characteristic_id;
     }
 
@@ -37,9 +35,9 @@ public class Characteristics {
 
     public String getSeason(){return season;}
 
-    public Integer getHeight(){return height;}
+    public Float getHeight(){return height;}
 
-    public void setCharacteristic_id(Integer characteristic_id) {
+    public void setCharacteristic_id(Long characteristic_id) {
         this.characteristic_id = characteristic_id;
     }
 
@@ -47,7 +45,7 @@ public class Characteristics {
         this.color = color;
     }
 
-    public void setHeight(Integer height) {
+    public void setHeight(Float height) {
         this.height = height;
     }
 
@@ -59,14 +57,12 @@ public class Characteristics {
         this.special_characteristics = special_characteristic;
     }
 
-    @Override
-    public String toString() {
-        return "Characteristics{" +
-                "characteristic_id=" + characteristic_id +
-                ", color='" + color + '\'' +
-                ", height=" + height +
-                ", season='" + season + '\'' +
-                ", special_characteristic='" + special_characteristics + '\'' +
-                '}';
+    public boolean characteristicIsEmpty() {
+        return this.special_characteristics.isEmpty();
     }
+
+    public boolean characteristicsAreEqual(Characteristics characteristic) {
+        return this.special_characteristics.equals(characteristic.getSpecial_characteristics());
+    }
+
 }

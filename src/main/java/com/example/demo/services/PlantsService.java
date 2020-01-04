@@ -5,9 +5,6 @@ import com.example.demo.repository.PlantsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 public class PlantsService {
 
@@ -18,29 +15,29 @@ public class PlantsService {
         this.plantsRepository = plantsRepository;
     }
 
-    public List<Plants> findAllPlants() {
-        Iterable<Plants> it = plantsRepository.findAll();
-
-        ArrayList<Plants> plants = new ArrayList<>();
-
-        it.forEach(plants::add);
-
-        return plants;
+    public Plants getPlantByName(String plantName) {
+        return plantsRepository.fetchPlantByName(plantName);
     }
 
-    public String plantsToString() {
-        StringBuilder to_return = new StringBuilder();
-        ArrayList<Plants> plants = new ArrayList<>(findAllPlants());
-
-        for (Plants p: plants) {
-            to_return.append(p.toString());
-        }
-
-        return to_return.toString();
+    public void insertPlant(Plants plant) {
+        plantsRepository.save(plant);
     }
 
-    public String getPlant(Integer plantId) {
-        return plantsRepository.fetchPlant(plantId);
+    public Long getPlantId(String plantName) {
+        return plantsRepository.fetchPlantId(plantName);
+    }
+
+    public void removePlantByName(String plantName) {
+        Plants p = plantsRepository.fetchPlantByName(plantName);
+        plantsRepository.deleteById(p.getPlant_id());
+    }
+
+    public Iterable<Plants> selectAllPlants() {
+        return plantsRepository.findAll();
+    }
+
+    public void modifyPlantByName(String searchedPlant, String newScientificName) {
+        plantsRepository.modifyPlant(searchedPlant, newScientificName);
     }
 
 }
